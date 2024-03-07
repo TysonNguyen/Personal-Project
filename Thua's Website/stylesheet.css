@@ -68,6 +68,15 @@
 .padding0 {
   padding: 0;
 }
+.padding10 {
+  padding: 10px;
+}
+.padding20 {
+  padding: 20px;
+}
+.padding30 {
+  padding: 30px;
+}
 .padding-center-lr {
   padding: 0 50%;
 }
@@ -98,3 +107,4 @@
 .text-right {
   text-align: right !important;
 }
+/* TEXT */

@@ -12,7 +12,7 @@
       }
     </style>
   </head>
-  <body claas="gtc-6">
+  <body>
     <nav>
       <a href="#">Home</a>
       <a href="./book-online.html">Book Online</a>
@@ -20,21 +20,102 @@
     </nav>
     <h2>Our Services</h2>
     <nav>
-      <button>All Services</button>
-      <button>Manicures</button>
-      <button>Pedicures</button>
-      <button>Nail Extensions</button>
-      <button>Waxing</button>
-      <button>Combo</button>
+      <button id="all">All Services</button>
+      <button id="mani">Manicures</button>
+      <button id="pedi" value="pedi">Pedicures</button>
+      <button id="extension">Nail Extensions</button>
+      <button id="wax">Waxing</button>
+      <button id="combo">Combo</button>
     </nav>
 
-    <div id="services" class="display-flex" style="grid-row: 2 / span4">
+    <div id="services" class="display-grid gtc3">
       <!--  Outter Grid Display -->
       <div
-        class="margin text-center"
-        style="border: solid 1px black; width: 500px"
+        id="forMani"
+        class="text-right margin10 padding20"
+        style="border: solid black 1px"
       >
-        Hello world
+        <div>
+          <h3>Manicure</h3>
+          <h6>The service will include: <br />cutting nails and painting</h6>
+        </div>
+        <div>
+          45 min <br />
+          From CA$25
+        </div>
+        <div><button>Book Now</button></div>
+      </div>
+      <div
+        id="forPedi"
+        name="product"
+        class="text-right margin10 padding20"
+        style="border: solid black 1px"
+      >
+        <div>
+          <h3>Pedicure 1</h3>
+          <h6>
+            The service will include:<br />
+            cutting nails and painting
+          </h6>
+        </div>
+        <div>
+          45 min <br />
+          From CA$25
+        </div>
+        <div><button>Book Now</button></div>
+      </div>
+      <div
+        name="product"
+        id="forPedi"
+        class="text-right margin10 padding20"
+        style="border: solid black 1px"
+      >
+        <div>
+          <h3>Pedicure 2</h3>
+          <h6>
+            The service will include:<br />
+            cutting nails and painting
+          </h6>
+        </div>
+        <div>
+          45 min <br />
+          From CA$25
+        </div>
+        <div><button>Book Now</button></div>
+      </div>
+      <div
+        id="forWax"
+        class="text-right margin10 padding20"
+        style="border: solid black 1px"
+      >
+        <div>
+          <h3>Waxing</h3>
+          <h6>The service will include: <br />cutting nails and painting</h6>
+        </div>
+        <div>
+          45 min <br />
+          From CA$25
+        </div>
+        <div><button>Book Now</button></div>
+      </div>
+
+      <div
+        id="forCombo"
+        class="text-right margin10 padding20"
+        style="border: solid black 1px"
+      >
+        <div>
+          <h3>Combo</h3>
+          <h6>
+            The service will include:<br />
+            cutting nails and painting
+          </h6>
+        </div>
+        <div>
+          45 min <br />
+          From CA$25
+        </div>
+        <div><button>Book Now</button></div>
       </div>
     </div>
   </body>
