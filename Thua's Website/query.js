@@ -1,28 +1,166 @@
 //Globally//
-const arrayCategory = ["Pedi", "Mani", "Extension", "Wax", "Combo"];
+const arrayCategory = ["pedi", "mani", "extension", "wax", "combo", "all"];
 
-function showProduct(serviceID) {
+const enableShow = 1;
+const enableOff = 0;
+function showProduct(serviceID, Enabler) {
+  var txtElement;
   switch (serviceID) {
     case arrayCategory[0]:
+      txtElement = document.getElementsByName("pedi");
+      if(Enabler == 3)
+      {
+        for (var i = 0; i < txtElement.length; i++) {
+          txtElement[i].style.display = "block";
+        }
+        return;
+      }
+      
+      if (Enabler != 3){
+        for (var i = 0; i < txtElement.length; i++) {
+          if (Enabler == 1) {
+            txtElement[i].style.display = "block";
+          }
+          else{
+            while (i < txtElement.length) {
+              txtElement[i].style.display = "none";
+              i++;
+            }
+            return;
+          }
+        }
+      showProduct("mani", 0);
+      showProduct("extension", 0);
+      showProduct("wax", 0);
+      showProduct("combo", 0);
+      }
       break;
     case arrayCategory[1]:
+      txtElement = document.getElementsByName("mani");
+      if(Enabler == 3)
+      {
+        for (var i = 0; i < txtElement.length; i++) {
+          txtElement[i].style.display = "block";
+          return;
+        }
+      }
+      
+      if (Enabler != 3){
+        for (var i = 0; i < txtElement.length; i++) {
+          if (Enabler == 1) {
+            txtElement[i].style.display = "block";
+          }
+          else{
+            while (i < txtElement.length) {
+              txtElement[i].style.display = "none";
+              i++;
+            }
+            return;
+          }
+        }
+      showProduct("pedi", 0);
+      showProduct("extension", 0);
+      showProduct("wax", 0);
+      showProduct("combo", 0);
+      }
       break;
     case arrayCategory[2]:
+      txtElement = document.getElementsByName("extension");
+      if(Enabler == 3)
+      {
+        for (var i = 0; i < txtElement.length; i++) {
+          txtElement[i].style.display = "block";
+        }
+        return;
+      }
+      
+      if (Enabler != 3){
+        for (var i = 0; i < txtElement.length; i++) {
+          if (Enabler == 1) {
+            txtElement[i].style.display = "block";
+          }
+          else{
+            while (i < txtElement.length) {
+              txtElement[i].style.display = "none";
+              i++;
+            }
+            return;
+          }
+        }
+      showProduct("mani", 0);
+      showProduct("pedi", 0);
+      showProduct("wax", 0);
+      showProduct("combo", 0);
+      }
       break;
     case arrayCategory[3]:
+      txtElement = document.getElementsByName("wax");
+      if(Enabler == 3)
+      {
+        for (var i = 0; i < txtElement.length; i++) {
+          txtElement[i].style.display = "block";
+        }
+        return;
+      }
+      
+      if (Enabler != 3){
+        for (var i = 0; i < txtElement.length; i++) {
+          if (Enabler == 1) {
+            txtElement[i].style.display = "block";
+          }
+          else{
+            while (i < txtElement.length) {
+              txtElement[i].style.display = "none";
+              i++;
+            }
+            return;
+          }
+        }
+      showProduct("mani", 0);
+      showProduct("extension", 0);
+      showProduct("pedi", 0);
+      showProduct("combo", 0);
+      }
       break;
     case arrayCategory[4]:
+      txtElement = document.getElementsByName("combo");
+      if(Enabler == 3)
+      {
+        for (var i = 0; i < txtElement.length; i++) {
+          txtElement[i].style.display = "block";
+        }
+        return;
+      }
+      
+      if (Enabler != 3){
+        for (var i = 0; i < txtElement.length; i++) {
+          if (Enabler == 1) {
+            txtElement[i].style.display = "block";
+          }
+          else{
+            while (i < txtElement.length) {
+              txtElement[i].style.display = "none";
+              i++;
+            }
+            return;
+          }
+        }
+      showProduct("mani", 0);
+      showProduct("extension", 0);
+      showProduct("wax", 0);
+      showProduct("pedi", 0);
+      }
       break;
-    default:
-      for (var i = 0; i < arrayCategory; i++) {
-        showProduct(arrayCategory[i]);
+    case arrayCategory[5]:
+      for (var i = 0; i < arrayCategory.length; i++) {
+        showProduct(arrayCategory[i], Enabler);
       }
       break;
   }
 }
-
 //Globally//
 
+//BOOK-ONLINE//
 setInterval(function ScreenMedia() {
   if (window.innerWidth < 800) {
     document.getElementById("services").classList.remove("gtc-3");
@@ -36,27 +174,31 @@ setInterval(function ScreenMedia() {
 }, 100);
 
 const showAll = () => {
-  document.getElementById("forMani").style.backgroundColor = "blue";
-  var txtElement = document.getElementsByName("product");
-  for (var i = 0; i < txtElement.length; i++) {
-    txtElement[i].style.display = "none";
-  }
-
-  //.getElementById("forExtension").style.backgroundColor = "blue";
-  document.getElementById("forWax").style.backgroundColor = "blue";
-  document.getElementById("forCombo").style.backgroundColor = "blue";
+  showProduct("all", 3);
 };
 document.querySelector("#all").addEventListener("click", showAll);
 
-const showMani = () => {};
-document.querySelector("#pedi").addEventListener("click", showMani);
-
-const showPedi = () => {};
+const showPedi = () => {
+  showProduct("pedi", 1);
+};
 document.querySelector("#pedi").addEventListener("click", showPedi);
 
-const showExtension = () => {};
-document.querySelector("#pedi").addEventListener("click", showExtension);
-const showWax = () => {};
-document.querySelector("#pedi").addEventListener("click", showWax);
-const showCombo = () => {};
-document.querySelector("#pedi").addEventListener("click", showCombo);
+const showMani = () => {
+  showProduct("mani", 1);
+};
+document.querySelector("#mani").addEventListener("click", showMani);
+
+const showExtension = () => {
+  showProduct("extension", 1);
+};
+document.querySelector("#extension").addEventListener("click", showExtension);
+const showWax = () => {
+  showProduct("wax", 1);
+};
+document.querySelector("#wax").addEventListener("click", showWax);
+const showCombo = () => {
+  showProduct("combo", 1);
+};
+document.querySelector("#combo").addEventListener("click", showCombo);
+//BOOK-ONLINE//
+
