@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comment Method Generator", "Comment Method Generator\Comment Method Generator.csproj", "{83F6941B-6E51-4969-BDD5-5D1195328B1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83F6941B-6E51-4969-BDD5-5D1195328B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83F6941B-6E51-4969-BDD5-5D1195328B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83F6941B-6E51-4969-BDD5-5D1195328B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83F6941B-6E51-4969-BDD5-5D1195328B1E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {220B9B84-BF20-475F-99EB-09045D48913F}
+	EndGlobalSection
+EndGlobal
