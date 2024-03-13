@@ -1,6 +1,10 @@
 //Globally//
 const arrayCategory = ["pedi", "mani", "extension", "wax", "combo", "all"];
 
+
+//Globally//
+
+//BOOK-ONLINE//
 const enableShow = 1;
 const enableOff = 0;
 function showProduct(serviceID, Enabler) {
@@ -158,9 +162,6 @@ function showProduct(serviceID, Enabler) {
       break;
   }
 }
-//Globally//
-
-//BOOK-ONLINE//
 setInterval(function ScreenMedia() {
   if (window.innerWidth < 800) {
     document.getElementById("services").classList.remove("gtc-3");
@@ -172,22 +173,18 @@ setInterval(function ScreenMedia() {
     document.body.style.background = "palevioletred";
   }
 }, 100);
-
 const showAll = () => {
   showProduct("all", 3);
 };
 document.querySelector("#all").addEventListener("click", showAll);
-
 const showPedi = () => {
   showProduct("pedi", 1);
 };
 document.querySelector("#pedi").addEventListener("click", showPedi);
-
 const showMani = () => {
   showProduct("mani", 1);
 };
 document.querySelector("#mani").addEventListener("click", showMani);
-
 const showExtension = () => {
   showProduct("extension", 1);
 };
@@ -200,5 +197,7 @@ const showCombo = () => {
   showProduct("combo", 1);
 };
 document.querySelector("#combo").addEventListener("click", showCombo);
+
+
 //BOOK-ONLINE//
 
