@@ -67,16 +67,16 @@ function ProccessClick() {
   for (let i = 0; i < row_max; i++)
     for (let j = 0; j < col_max; j++) {
       if (cells[i][j].bid == this.value) {
-        //console.log(cells[i][j]); Check to see if it has turn from unexposed to exposed
-        cells[i][j].is_exposed = true;
-
-        console.log(cells[i][j]);
-        if (cells[i][j].is_mine == true) {
-          this.style.backgroundColor = "red";
-        } else {
-          this.innerHTML = cells[i][j].adjacent_count;
-          this.style.backgroundColor = "green";
-        }
+        if (cells.adjacent_count > 0) {
+          cells[i][j].is_exposed = true;
+          console.log(cells[i][j]);
+          if (cells[i][j].is_mine == true) {
+            this.style.backgroundColor = "red";
+          } else {
+            this.innerHTML = cells[i][j].adjacent_count;
+            this.style.backgroundColor = "green";
+          }
+        } else CheckCell(i, j);
       }
     }
 }
