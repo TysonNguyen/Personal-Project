@@ -8,10 +8,9 @@ namespace Comment_Method_Generator
 {
     internal class Program
     {
+        public string type = new string[""];
         static void Main(string[] args)
         {
-           
-
             string[] saSplitted_Input = new string[100];
             string sMethod = null;
 
@@ -47,11 +46,19 @@ namespace Comment_Method_Generator
         private static string OutputComment(string[] splitted_Input, string sInput)
         {
             string sComment = "//********************************************************************************************\r\n";
-            sComment += sInput;
-            foreach (string s in splitted_Input)
+            sComment += "//Method:"+sInput+ "\r\n";
+            sComment += "//Purpose: \r\n";
+            sComment += "//Parameters: \r\n";
+            for(int i = 0; i < splitted_Input.Length; i++)
             {
-
+                
             }
+            for(int i = 0; i < 2; i++)
+            {
+                if (splitted_Input[i] )
+                break;
+            }
+            sComment += "//Returns:";
             sComment += "//********************************************************************************************\r\n";
 
             return sComment;

@@ -1,6 +1,6 @@
 var row_max, col_max;
 var cells,
-  num_mines = 0;
+num_mines = 0;
 var cell = { bid: "", is_mine: false, is_exposed: false, adjacent_count: 0 };
 window.onload = function () {
   console.log("loaded");
@@ -33,6 +33,7 @@ function NewGame() {
   cells = [];
   NewGrid();
   RandomCells();
+  CountAdjacent();
 }
 
 function Show() {}
@@ -67,16 +68,16 @@ function ProccessClick() {
   for (let i = 0; i < row_max; i++)
     for (let j = 0; j < col_max; j++) {
       if (cells[i][j].bid == this.value) {
-        if (cells.adjacent_count > 0) {
-          cells[i][j].is_exposed = true;
-          console.log(cells[i][j]);
-          if (cells[i][j].is_mine == true) {
-            this.style.backgroundColor = "red";
-          } else {
-            this.innerHTML = cells[i][j].adjacent_count;
-            this.style.backgroundColor = "green";
-          }
-        } else CheckCell(i, j);
+        //if (cells.adjacent_count > 0) {
+        cells[i][j].is_exposed = true;
+        console.log(cells[i][j]);
+        if (cells[i][j].is_mine == true) {
+          this.style.backgroundColor = "red";
+        } else {
+          this.innerHTML = cells[i][j].adjacent_count;
+          this.style.backgroundColor = "green";
+        }
+        //} //else CheckCell(i, j);
       }
     }
 }
@@ -94,20 +95,25 @@ function RandomCells() {
     c = Math.floor(Math.random() * col_max);
     if (cells[r][c].is_mine == false) {
       cells[r][c].is_mine = true;
-      cells[r][c].adjacent_count++;
       i++;
     }
   }
-  CountAdjacent();
 }
 
 function CountAdjacent() {
   for (var i = 0; i < row_max; i++) {
     for (var j = 0; j < col_max; j++) {
-      if (cells[i][j].is_mine) {
+      if (!cells[i][j].is_mine) {
+        console.log(cells[i][j]);
+        cells[i + 1][j].adjacent_count++;
       }
     }
   }
 }
-
 function CheckCell(i, j) {}
+
+function Around(iX, iY) {
+  if (cells[iX][iY].is_mine && iX >= 0 && iY >=0) {
+    return 1;
+  } else return 0;
+}

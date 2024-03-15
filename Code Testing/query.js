@@ -20,3 +20,13 @@ function Whiten() {
 function Enter() {
   document.body.style.backgroundColor = this.style.backgroundColor;
 }
+
+
+console.log(ReturnNum(3));
+
+function ReturnNum(iX) {
+  
+  if(iX < 1)
+  return 0;
+  else return 1;
+}
