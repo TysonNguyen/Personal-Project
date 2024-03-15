@@ -1,0 +1,53 @@
+body{
+    background-color: grey;
+}
+header{
+    text-align: center;
+    font-size: 50px;
+    background-color: rgb(232, 232, 232);
+    font-weight: bold;
+
+}
+
+#outside{
+    background-color: rgb(184, 184, 184);
+}
+
+#outside > div{
+    text-align: center;
+}
+
+#startGame{
+    font-weight: bolder;
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+#Difficulty{
+    height: 25px;
+    margin-left: 10px;
+    background-color: rgb(255, 183, 255);
+}
+
+select option
+{
+    background-color: white
+}
+#Difficulty option
+{
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+#minefield{
+    display: grid;
+   
+}
+.mine{
+    width: 30px;
+    height: 30px;
+    font-weight: bolder;
+}
+
+
+
