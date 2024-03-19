@@ -36,8 +36,6 @@ function NewGame() {
   CountAdjacent();
 }
 
-function Show() { }
-
 function NewGrid() {
   console.log(`You have change to ${row_max}x${col_max}`);
   buttons = "";
@@ -64,21 +62,21 @@ function NewGrid() {
   document.getElementById("minefield").innerHTML = buttons;
   BindGrid();
 }
+function Show(iX, iY) {
+  document.getElementById(`c_${iX}_r${iY}`).style.backgroundColor = "green";
+}
 function ProccessClick() {
-  for (let i = 0; i < row_max; i++)
-    for (let j = 0; j < col_max; j++) {
-      if (cells[i][j].bid == this.value) {
-        //if (cells.adjacent_count > 0) {
-        cells[i][j].is_exposed = true;
-        if (cells[i][j].is_mine == true) {
-          this.style.backgroundColor = "red";
-        } else {
-          this.innerHTML = cells[i][j].adjacent_count;
-          this.style.backgroundColor = "green";
-        }
-        //} //else CheckCell(i, j);
-      }
-    }
+  var currentSplit = this.value.split("_");
+  let iX = currentSplit[1];
+  let iY = currentSplit[3];
+  if ((cells[iX][iY].adjacent_count = 0)) {
+    CheckCell(iX, iY);
+  } else if (cells[iX][iY].is_mine) {
+    this.style.backgroundColor = "red";
+  } else {
+    this.innerHTML = cells[iX][iY].adjacent_count;
+    Show(iX, iY);
+  }
 }
 function BindGrid() {
   const mines = document.querySelectorAll(".mine");
@@ -106,7 +104,7 @@ function CountAdjacent() {
         Around(i + 1, j); //Down
         Around(i - 1, j); //Up
         Around(i, j + 1); //Right
-        Around(i, j - 1); //Left 
+        Around(i, j - 1); //Left
         Around(i + 1, j + 1); //Down Right
         Around(i + 1, j - 1); //Down Left
         Around(i - 1, j + 1); //Up Right
@@ -116,12 +114,15 @@ function CountAdjacent() {
     }
   }
 }
-function CheckCell(i, j) { }
+function CheckCell(i, j) {
+  if ((cells[i][j].adjacent_count = 0)) {
+  }
+}
 
 function Around(iX, iY) {
-  if(iX <= row_max - 1 && iX >= 0){
-    if(iY <= col_max - 1 && iY >= 0){
-      cells[iX][iY].adjacent_count = cells[iX][iY].adjacent_count + 1;  
+  if (iX <= row_max - 1 && iX >= 0) {
+    if (iY <= col_max - 1 && iY >= 0) {
+      cells[iX][iY].adjacent_count = cells[iX][iY].adjacent_count + 1;
     }
   }
 }
