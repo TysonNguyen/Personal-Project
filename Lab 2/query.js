@@ -1,6 +1,6 @@
 var row_max, col_max;
 var cells,
-num_mines = 0;
+  num_mines = 0;
 var cell = { bid: "", is_mine: false, is_exposed: false, adjacent_count: 0 };
 window.onload = function () {
   console.log("loaded");
@@ -17,7 +17,7 @@ window.onload = function () {
 function NewGame() {
   console.clear();
   row_max = parseInt(document.getElementById("Difficulty").value);
-  col_max = row_max;
+  col_max = parseInt(document.getElementById("Difficulty").value);
   switch (row_max) {
     case 10:
       num_mines = 10;
@@ -36,7 +36,7 @@ function NewGame() {
   CountAdjacent();
 }
 
-function Show() {}
+function Show() { }
 
 function NewGrid() {
   console.log(`You have change to ${row_max}x${col_max}`);
@@ -70,7 +70,6 @@ function ProccessClick() {
       if (cells[i][j].bid == this.value) {
         //if (cells.adjacent_count > 0) {
         cells[i][j].is_exposed = true;
-        console.log(cells[i][j]);
         if (cells[i][j].is_mine == true) {
           this.style.backgroundColor = "red";
         } else {
@@ -103,17 +102,26 @@ function RandomCells() {
 function CountAdjacent() {
   for (var i = 0; i < row_max; i++) {
     for (var j = 0; j < col_max; j++) {
-      if (!cells[i][j].is_mine) {
+      if (cells[i][j].is_mine) {
+        Around(i + 1, j); //Down
+        Around(i - 1, j); //Up
+        Around(i, j + 1); //Right
+        Around(i, j - 1); //Left 
+        Around(i + 1, j + 1); //Down Right
+        Around(i + 1, j - 1); //Down Left
+        Around(i - 1, j + 1); //Up Right
+        Around(i - 1, j - 1); //Down Right
         console.log(cells[i][j]);
-        cells[i + 1][j].adjacent_count++;
       }
     }
   }
 }
-function CheckCell(i, j) {}
+function CheckCell(i, j) { }
 
 function Around(iX, iY) {
-  if (cells[iX][iY].is_mine && iX >= 0 && iY >=0) {
-    return 1;
-  } else return 0;
+  if(iX <= row_max - 1 && iX >= 0){
+    if(iY <= col_max - 1 && iY >= 0){
+      cells[iX][iY].adjacent_count = cells[iX][iY].adjacent_count + 1;  
+    }
+  }
 }
