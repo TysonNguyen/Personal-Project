@@ -39,13 +39,7 @@ function NewGame() {
 function NewGrid() {
   console.log(`You have change to ${row_max}x${col_max}`);
   buttons = "";
-  document.getElementById(
-    "minefield"
-  ).style.gridTemplateColumns = `repeat(${col_max},30px)`;
-  document.getElementById(
-    "minefield"
-  ).style.gridTemplateRows = `repeat(${row_max},30px)`;
-
+  buttons += `<div style="grid-template-columns:repeat(${col_max},30px); grid-template-rows: repeat(${row_max},30px); width:${row_max*30}px">`;
   for (let i = 0; i < row_max; i++) {
     cells[i] = [];
     for (let j = 0; j < col_max; j++) {
@@ -56,26 +50,27 @@ function NewGrid() {
         adjacent_count: 0,
       };
       cells[i][j] = cell;
-      buttons += `<button class="mine" value="${cells[i][j].bid}"></button>`;
+      buttons += `<button class="mine" value="${cells[i][j].bid}" id="${cells[i][j].bid}""></button>`;
     }
   }
+  buttons += `</div>`;
   document.getElementById("minefield").innerHTML = buttons;
   BindGrid();
 }
 function Show(iX, iY) {
-  document.getElementById(`c_${iX}_r${iY}`).style.backgroundColor = "green";
+  document.querySelector(`#r_${iX}_c_${iY}`).style.backgroundColor = "white";
 }
 function ProccessClick() {
   var currentSplit = this.value.split("_");
   let iX = currentSplit[1];
   let iY = currentSplit[3];
-  if ((cells[iX][iY].adjacent_count = 0)) {
-    CheckCell(iX, iY);
+  if (cells[iX][iY].adjacent_count == 0 && !cells[iX][iY].is_mine)  {
+    Show(iX,iY);
   } else if (cells[iX][iY].is_mine) {
     this.style.backgroundColor = "red";
   } else {
+    this.style.backgroundColor = "green";
     this.innerHTML = cells[iX][iY].adjacent_count;
-    Show(iX, iY);
   }
 }
 function BindGrid() {
@@ -115,8 +110,7 @@ function CountAdjacent() {
   }
 }
 function CheckCell(i, j) {
-  if ((cells[i][j].adjacent_count = 0)) {
-  }
+  document.querySelector(`#r_${i}_c_${j}`).style.backgroundColor = "black";
 }
 
 function Around(iX, iY) {

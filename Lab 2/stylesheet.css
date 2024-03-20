@@ -38,15 +38,24 @@ select option
     font-size: 15px;
     font-weight: bolder;
 }
-
 #minefield{
+    display: flex;
+    justify-content: center;
+}
+#minefield > div{
     display: grid;
-   
+
 }
 .mine{
     width: 30px;
     height: 30px;
     font-weight: bolder;
+}
+button{
+    background-color: rgb(65, 53, 53);
+}
+#NewGame{
+    background-color: grey;
 }
 
 
