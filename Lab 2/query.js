@@ -3,6 +3,8 @@ var cells,
   num_mines = 0;
 var cell = { bid: "", is_mine: false, is_exposed: false, adjacent_count: 0 };
 var startGame = false;
+var iX, iY;
+var showedBomb, totalBombExposed = 0;
 window.onload = function () {
   console.clear();
   var toAppend = document.createElement("div");
@@ -17,7 +19,7 @@ window.onload = function () {
 
 function NewGame() {
   console.clear();
-  document.querySelector("#lost-screen").style.display = "none";
+  totalBombExposed = 0;
   row_max = parseInt(document.getElementById("Difficulty").value);
   col_max = parseInt(document.getElementById("Difficulty").value);
   switch (row_max) {
@@ -34,14 +36,15 @@ function NewGame() {
 
   cells = [];
   NewGrid();
+  document.querySelector("#lost-screen").style.display = "none";
+  document.querySelector("#win-screen").style.display = "none";
   startGame = false;
 }
 
 function NewGrid() {
   buttons = "";
-  buttons += `<div style="grid-template-columns:repeat(${col_max},30px); grid-template-rows: repeat(${row_max},30px); width:${
-    row_max * 30
-  }px">`;
+  buttons += `<div style="grid-template-columns:repeat(${col_max},30px); grid-template-rows: repeat(${row_max},30px); width:${row_max * 30
+    }px">`;
   for (let i = 0; i < row_max; i++) {
     cells[i] = [];
     for (let j = 0; j < col_max; j++) {
@@ -59,17 +62,7 @@ function NewGrid() {
   document.getElementById("minefield").innerHTML = buttons;
   BindGrid();
 }
-function Show() {}
-function ShowGrid() {}
-function ProccessClick() {
-  if (!startGame) {
-    Begin();
-    startGame = true;
-  }
-  
-  var currentSplit = this.value.split("_");
-  let iX = currentSplit[1];
-  let iY = currentSplit[3];
+function Show() {
   if (cells[iX][iY].adjacent_count == 0 && !cells[iX][iY].is_mine)
     CheckCell(iX, iY, cells[iX][iY]);
   if (cells[iX][iY].adjacent_count > 0 && !cells[iX][iY].is_mine) {
@@ -83,6 +76,32 @@ function ProccessClick() {
     ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: 20px;height: 20px;" >`;
     document.querySelector("#lost-screen").style.display = "block";
   }
+}
+function ShowGrid() {
+  totalBombExposed += showedBomb;
+  console.log(totalBombExposed);
+  if (totalBombExposed == num_mines) {
+    document.querySelector("#win-screen").style.display = "block";
+  }
+}
+function ProccessClick(event) {
+  if (!startGame) {
+    Begin();
+    startGame = true;
+  }
+  var currentSplit = this.value.split("_");
+  iX = currentSplit[1];
+  iY = currentSplit[3];
+  if (event.shiftKey && cells[iX][iY].is_mine) {
+    showedBomb = 1;
+    document.querySelector(
+      `#r_${iX}_c_${iY}`
+    ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: 20px;height: 20px;" >`;
+    ShowGrid();
+    console.log("You have click with shiftKey");
+  }
+  else { Show(); }
+
 
   cells[iX][iY].is_exposed = true;
 }
@@ -95,11 +114,13 @@ function BindGrid() {
 
 function RandomCells() {
   let i = 0;
+
   while (i < num_mines) {
     r = Math.floor(Math.random() * row_max);
     c = Math.floor(Math.random() * col_max);
     if (cells[r][c].is_mine == false) {
       cells[r][c].is_mine = true;
+      console.log(document.querySelector(`#r_${r}_c_${c}`));
       i++;
     }
   }
@@ -123,7 +144,7 @@ function CountAdjacent() {
   }
 }
 function CheckCell(i, j) {
- 
+
   if (i >= 0 && i < row_max && j >= 0 && j < col_max) {
     if (cells[i][j].is_mine == false && cells[i][j].is_exposed == false) {
       if (cells[i][j].adjacent_count == 0) {
