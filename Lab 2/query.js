@@ -2,8 +2,9 @@ var row_max, col_max;
 var cells,
   num_mines = 0;
 var cell = { bid: "", is_mine: false, is_exposed: false, adjacent_count: 0 };
+var startGame = false;
 window.onload = function () {
-  console.log("loaded");
+  console.clear();
   var toAppend = document.createElement("div");
   toAppend.setAttribute("id", "minefield");
   document.getElementById("outside").appendChild(toAppend);
@@ -16,6 +17,7 @@ window.onload = function () {
 
 function NewGame() {
   console.clear();
+  document.querySelector("#lost-screen").style.display = "none";
   row_max = parseInt(document.getElementById("Difficulty").value);
   col_max = parseInt(document.getElementById("Difficulty").value);
   switch (row_max) {
@@ -32,14 +34,14 @@ function NewGame() {
 
   cells = [];
   NewGrid();
-  RandomCells();
-  CountAdjacent();
+  startGame = false;
 }
 
 function NewGrid() {
-  console.log(`You have change to ${row_max}x${col_max}`);
   buttons = "";
-  buttons += `<div style="grid-template-columns:repeat(${col_max},30px); grid-template-rows: repeat(${row_max},30px); width:${row_max*30}px">`;
+  buttons += `<div style="grid-template-columns:repeat(${col_max},30px); grid-template-rows: repeat(${row_max},30px); width:${
+    row_max * 30
+  }px">`;
   for (let i = 0; i < row_max; i++) {
     cells[i] = [];
     for (let j = 0; j < col_max; j++) {
@@ -57,21 +59,32 @@ function NewGrid() {
   document.getElementById("minefield").innerHTML = buttons;
   BindGrid();
 }
-function Show(iX, iY) {
-  document.querySelector(`#r_${iX}_c_${iY}`).style.backgroundColor = "white";
-}
+function Show() {}
+function ShowGrid() {}
 function ProccessClick() {
+  if (!startGame) {
+    Begin();
+    startGame = true;
+  }
+  
   var currentSplit = this.value.split("_");
   let iX = currentSplit[1];
   let iY = currentSplit[3];
-  if (cells[iX][iY].adjacent_count == 0 && !cells[iX][iY].is_mine)  {
-    Show(iX,iY);
-  } else if (cells[iX][iY].is_mine) {
-    this.style.backgroundColor = "red";
-  } else {
-    this.style.backgroundColor = "green";
-    this.innerHTML = cells[iX][iY].adjacent_count;
+  if (cells[iX][iY].adjacent_count == 0 && !cells[iX][iY].is_mine)
+    CheckCell(iX, iY, cells[iX][iY]);
+  if (cells[iX][iY].adjacent_count > 0 && !cells[iX][iY].is_mine) {
+    document.querySelector(`#r_${iX}_c_${iY}`).innerHTML =
+      cells[iX][iY].adjacent_count;
+    document.querySelector(`#r_${iX}_c_${iY}`).style.backgroundColor = "green";
   }
+  if (cells[iX][iY].is_mine) {
+    document.querySelector(
+      `#r_${iX}_c_${iY}`
+    ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: 20px;height: 20px;" >`;
+    document.querySelector("#lost-screen").style.display = "block";
+  }
+
+  cells[iX][iY].is_exposed = true;
 }
 function BindGrid() {
   const mines = document.querySelectorAll(".mine");
@@ -104,13 +117,36 @@ function CountAdjacent() {
         Around(i + 1, j - 1); //Down Left
         Around(i - 1, j + 1); //Up Right
         Around(i - 1, j - 1); //Down Right
-        console.log(cells[i][j]);
+
       }
     }
   }
 }
 function CheckCell(i, j) {
-  document.querySelector(`#r_${i}_c_${j}`).style.backgroundColor = "black";
+ 
+  if (i >= 0 && i < row_max && j >= 0 && j < col_max) {
+    if (cells[i][j].is_mine == false && cells[i][j].is_exposed == false) {
+      if (cells[i][j].adjacent_count == 0) {
+        document.querySelector(`#r_${i}_c_${j}`).style.backgroundColor =
+          "white";
+        cells[i][j].is_exposed = true;
+        CheckCell(parseInt(i) + 1, j);
+        CheckCell(parseInt(i) - 1, j);
+        CheckCell(i, parseInt(j) + 1);
+        CheckCell(i, parseInt(j) - 1);
+        CheckCell(parseInt(i) + 1, parseInt(j) + 1);
+        CheckCell(parseInt(i) - 1, parseInt(j) + 1);
+        CheckCell(parseInt(i) - 1, parseInt(j) - 1);
+        CheckCell(parseInt(i) + 1, parseInt(j) - 1);
+      }
+      if (cells[i][j].adjacent_count > 0) {
+        document.querySelector(`#r_${i}_c_${j}`).innerHTML =
+          cells[i][j].adjacent_count;
+        document.querySelector(`#r_${i}_c_${j}`).style.backgroundColor =
+          "green";
+      }
+    }
+  }
 }
 
 function Around(iX, iY) {
@@ -119,4 +155,9 @@ function Around(iX, iY) {
       cells[iX][iY].adjacent_count = cells[iX][iY].adjacent_count + 1;
     }
   }
+}
+
+function Begin() {
+  RandomCells();
+  CountAdjacent();
 }
