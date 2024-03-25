@@ -92,13 +92,20 @@ function ProccessClick(event) {
   var currentSplit = this.value.split("_");
   iX = currentSplit[1];
   iY = currentSplit[3];
-  if (event.shiftKey && cells[iX][iY].is_mine) {
-    showedBomb = 1;
-    document.querySelector(
-      `#r_${iX}_c_${iY}`
-    ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: 20px;height: 20px;" >`;
-    ShowGrid();
-    console.log("You have click with shiftKey");
+  if (event.shiftKey) {
+    if (cells[iX][iY].is_mine) {
+      showedBomb = 1;
+      document.querySelector(
+        `#r_${iX}_c_${iY}`
+      ).innerHTML = `<img src="./flag.jpg" alt="" style="width: 20px;height: 20px;" >`;
+      ShowGrid();
+      console.log("You have click with shiftKey");
+    }
+    else if (!cells[iX][iY].is_mine) {
+      document.querySelector(
+        `#r_${iX}_c_${iY}`
+      ).innerHTML = `<img src="./flag.jpg" alt="" style="width: 20px;height: 20px;" >`;
+    }
   }
   else { Show(); }
 
