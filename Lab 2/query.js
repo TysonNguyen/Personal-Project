@@ -25,24 +25,15 @@ var games = [
     num_mines: 99,
     row_max: 24,
     col_max: 24,
-    bomb_size:25
+    bomb_size: 25
   }
 ]
 
-var displayScreenStyle = [
-  {
-    fs: "100px",
-    shiftTop:"50%",
-    shiftLeft:"50%"
-  },
-  {
 
-  },{}
-]
 var startGame = false;
 var iX, iY, gm;
-var showedBomb,totalBombExposed = 0;
-var displayScreen ;
+var showedBomb, totalBombExposed = 0;
+var displayScreen;
 window.onload = function () {
   console.clear();
   var toAppend = document.createElement("div");
@@ -97,12 +88,11 @@ function Show() {
     displayScreen.innerHTML = `YOU <br> LOST`;
     displayScreen.style.display = "block";
     displayScreen.style.color = "red";
-    
+
   }
 }
 function ShowGrid() {
   totalBombExposed += showedBomb;
-  console.log(totalBombExposed);
   if (totalBombExposed == games[gm].num_mines) {
     displayScreen.innerHTML = `YOU <br> WIN`;
     displayScreen.style.display = "block";
@@ -117,21 +107,25 @@ function ProccessClick(event) {
   var currentSplit = this.value.split("_");
   iX = currentSplit[1];
   iY = currentSplit[3];
-  if (event.shiftKey) {
-    if (cells[iX][iY].is_mine) {
-      showedBomb = 1;
-      document.querySelector(
-        `#r_${iX}_c_${iY}`
-      ).innerHTML = `<img src="./flag.jpg" alt="" style="width: 20px;height: 20px;" >`;
-      ShowGrid();
+  if (cells[iX][iY].is_exposed == false) {
+    if (event.shiftKey) {
+      console.log(cells[iX][iY]);
       console.log("You have click with shiftKey");
-    } else if (!cells[iX][iY].is_mine) {
-      document.querySelector(
-        `#r_${iX}_c_${iY}`
-      ).innerHTML = `<img src="./flag.jpg" alt="" style="width: 20px;height: 20px;" >`;
+      if (cells[iX][iY].is_mine) {
+        showedBomb = 1;
+        document.querySelector(
+          `#r_${iX}_c_${iY}`
+        ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
+        ShowGrid();
+        
+      } else if (!cells[iX][iY].is_mine) {
+        document.querySelector(
+          `#r_${iX}_c_${iY}`
+        ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
+      }
+    } else {
+      Show();
     }
-  } else {
-    Show();
   }
 
   cells[iX][iY].is_exposed = true;
@@ -151,7 +145,6 @@ function RandomCells() {
     c = Math.floor(Math.random() * games[gm].col_max);
     if (cells[r][c].is_mine == false) {
       cells[r][c].is_mine = true;
-      console.log(document.querySelector(`#r_${r}_c_${c}`));
       i++;
     }
   }
@@ -190,6 +183,7 @@ function CheckCell(i, j) {
         CheckCell(parseInt(i) + 1, parseInt(j) - 1);
       }
       if (cells[i][j].adjacent_count > 0) {
+        cells[i][j].is_exposed = true;
         document.querySelector(`#r_${i}_c_${j}`).innerHTML =
           cells[i][j].adjacent_count;
         document.querySelector(`#r_${i}_c_${j}`).style.backgroundColor =
