@@ -46,34 +46,23 @@ select option
     display: grid;
 
 }
-.mine{
-    width: 30px;
-    height: 30px;
-    font-weight: bolder;
-    padding-top: 2px;
-    display: flex;
-    justify-content: center;
-}
+
 button{
     background-color: rgb(65, 53, 53);
 }
 #NewGame{
     background-color: grey;
 }
-#lost-screen,#win-screen{
-    color: red;
+#screen{
+
     font-weight:900;
-    font-size: 10vw;
+    font-size: 100px;
     text-align: center;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
-}
-#win-screen{
-    color:blue;
-    text-shadow: 3px 3px black;
+    display: none;
 }
 
 
