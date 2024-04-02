@@ -1,9 +1,9 @@
 
 function Cell(bomb_id, mine, exposed, adCount) {
   (this.bid = bomb_id),
-    (this.is_mine = mine),
-    (this.is_exposed = exposed),
-    (this.adjacent_count = adCount);
+  (this.is_mine = mine),
+  (this.is_exposed = exposed),
+  (this.adjacent_count = adCount);
 }
 var games = [
   {
@@ -119,6 +119,7 @@ function ProccessClick(event) {
         ShowGrid();
         
       } else if (!cells[iX][iY].is_mine) {
+        showedBomb -= 1;
         document.querySelector(
           `#r_${iX}_c_${iY}`
         ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
