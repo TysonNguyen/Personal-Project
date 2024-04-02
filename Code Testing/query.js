@@ -9,9 +9,11 @@ window.onload = function () {
   for (var j = 0; j < Buttons.length; j++) {
     Buttons[j].addEventListener("mouseenter", Clicked);
   }
+
+  document.querySelector("#rightClick").addEventListener("click",AlohaClick)
 };
 
-function Clicked() {
+function Clicked(e) {
   this.innerHTML = this.value;
 }
 function Whiten() {
@@ -22,11 +24,15 @@ function Enter() {
 }
 
 
-console.log(ReturnNum(3));
+
 
 function ReturnNum(iX) {
   
   if(iX < 1)
   return 0;
   else return 1;
+}
+
+function AlohaClick(e){
+  console.log(e.which);
 }

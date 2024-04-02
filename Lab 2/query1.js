@@ -1,4 +1,3 @@
-var row_max, col_max;
 
 function Cell(bomb_id, mine, exposed, adCount) {
   (this.bid = bomb_id),
@@ -11,25 +10,39 @@ var games = [
     diffculty: "Easy",
     num_mines: 10,
     row_max: 10,
-    col_max: 10
+    col_max: 10,
+    bomb_size: 60
   },
   {
     diffculty: "Medium",
     num_mines: 40,
     row_max: 18,
-    col_max: 18
+    col_max: 18,
+    bomb_size: 30
   },
   {
     diffculty: "Hard",
     num_mines: 99,
     row_max: 24,
-    col_max: 24
+    col_max: 24,
+    bomb_size: 25
   }
+]
+
+var displayScreenStyle = [
+  {
+    fs: "100px",
+    shiftTop: "50%",
+    shiftLeft: "50%"
+  },
+  {
+
+  }, {}
 ]
 var startGame = false;
 var iX, iY, gm;
-var showedBomb,
-  totalBombExposed = 0;
+var showedBomb, totalBombExposed = 0;
+var displayScreen;
 window.onload = function () {
   console.clear();
   var toAppend = document.createElement("div");
@@ -37,26 +50,15 @@ window.onload = function () {
   document.getElementById("outside").appendChild(toAppend);
   document.querySelector("#NewGame").addEventListener("click", NewGame);
   document.querySelector("#Difficulty").addEventListener("change", NewGame);
+  displayScreen = document.querySelector('#screen');
   NewGame();
 };
 
 function NewGame() {
   console.clear();
+  displayScreen.style.display = "none";
   totalBombExposed = 0;
-  row_max = parseInt(document.getElementById("Difficulty").value);
-  col_max = parseInt(document.getElementById("Difficulty").value);
-  switch (row_max) {
-    case 10:
-      num_mines = 10;
-      break;
-    case 18:
-      num_mines = 40;
-      break;
-    case 24:
-      num_mines = 99;
-      break;
-  }
-
+  gm = document.getElementById("Difficulty").value;
   cells = [];
   NewGrid();
 
@@ -65,12 +67,13 @@ function NewGame() {
 
 function NewGrid() {
   buttons = "";
-  buttons += `<div style="grid-template-columns:repeat(${col_max},30px); grid-template-rows: repeat(${row_max},30px); width:${
-    row_max * 30
-  }px">`;
-  for (let i = 0; i < row_max; i++) {
+  buttons += `<div style="
+  grid-template-columns:repeat(${games[gm].col_max},${games[gm].bomb_size}px); 
+  grid-template-rows: repeat(${games[gm].row_max},${games[gm].bomb_size}px); 
+  width:${games[gm].row_max * games[gm].bomb_size}px">`;
+  for (let i = 0; i < games[gm].row_max; i++) {
     cells[i] = [];
-    for (let j = 0; j < col_max; j++) {
+    for (let j = 0; j < games[gm].col_max; j++) {
       cells[i][j] = new Cell(`r_${i}_c_${j}`, false, false, 0);
       buttons += `<button class="mine" value="${cells[i][j].bid}" id="${cells[i][j].bid}""></button>`;
     }
@@ -90,15 +93,19 @@ function Show() {
   if (cells[iX][iY].is_mine) {
     document.querySelector(
       `#r_${iX}_c_${iY}`
-    ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: 20px;height: 20px;" >`;
-    document.querySelector("#lost-screen").style.display = "block";
+    ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
+    displayScreen.innerHTML = `YOU <br> LOST`;
+    displayScreen.style.display = "block";
+    displayScreen.style.color = "red";
+
   }
 }
 function ShowGrid() {
   totalBombExposed += showedBomb;
-  console.log(totalBombExposed);
-  if (totalBombExposed == num_mines) {
-    document.querySelector("#win-screen").style.display = "block";
+  if (totalBombExposed == games[gm].num_mines) {
+    displayScreen.innerHTML = `YOU <br> WIN`;
+    displayScreen.style.display = "block";
+    displayScreen.style.color = "blue";
   }
 }
 function ProccessClick(event) {
@@ -109,21 +116,25 @@ function ProccessClick(event) {
   var currentSplit = this.value.split("_");
   iX = currentSplit[1];
   iY = currentSplit[3];
-  if (event.shiftKey) {
-    if (cells[iX][iY].is_mine) {
-      showedBomb = 1;
-      document.querySelector(
-        `#r_${iX}_c_${iY}`
-      ).innerHTML = `<img src="./flag.jpg" alt="" style="width: 20px;height: 20px;" >`;
-      ShowGrid();
+  if (cells[iX][iY].is_exposed == false) {
+    if (event.shiftKey) {
+      console.log(cells[iX][iY]);
       console.log("You have click with shiftKey");
-    } else if (!cells[iX][iY].is_mine) {
-      document.querySelector(
-        `#r_${iX}_c_${iY}`
-      ).innerHTML = `<img src="./flag.jpg" alt="" style="width: 20px;height: 20px;" >`;
+      if (cells[iX][iY].is_mine) {
+        showedBomb = 1;
+        document.querySelector(
+          `#r_${iX}_c_${iY}`
+        ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
+        ShowGrid();
+        
+      } else if (!cells[iX][iY].is_mine) {
+        document.querySelector(
+          `#r_${iX}_c_${iY}`
+        ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
+      }
+    } else {
+      Show();
     }
-  } else {
-    Show();
   }
 
   cells[iX][iY].is_exposed = true;
@@ -138,20 +149,19 @@ function BindGrid() {
 function RandomCells() {
   let i = 0;
 
-  while (i < num_mines) {
-    r = Math.floor(Math.random() * row_max);
-    c = Math.floor(Math.random() * col_max);
+  while (i < games[gm].num_mines) {
+    r = Math.floor(Math.random() * games[gm].row_max);
+    c = Math.floor(Math.random() * games[gm].col_max);
     if (cells[r][c].is_mine == false) {
       cells[r][c].is_mine = true;
-      console.log(document.querySelector(`#r_${r}_c_${c}`));
       i++;
     }
   }
 }
 
 function CountAdjacent() {
-  for (var i = 0; i < row_max; i++) {
-    for (var j = 0; j < col_max; j++) {
+  for (var i = 0; i < games[gm].row_max; i++) {
+    for (var j = 0; j < games[gm].col_max; j++) {
       if (cells[i][j].is_mine) {
         Around(i + 1, j); //Down
         Around(i - 1, j); //Up
@@ -166,7 +176,7 @@ function CountAdjacent() {
   }
 }
 function CheckCell(i, j) {
-  if (i >= 0 && i < row_max && j >= 0 && j < col_max) {
+  if (i >= 0 && i < games[gm].row_max && j >= 0 && j < games[gm].col_max) {
     if (cells[i][j].is_mine == false && cells[i][j].is_exposed == false) {
       if (cells[i][j].adjacent_count == 0) {
         document.querySelector(`#r_${i}_c_${j}`).style.backgroundColor =
@@ -182,6 +192,7 @@ function CheckCell(i, j) {
         CheckCell(parseInt(i) + 1, parseInt(j) - 1);
       }
       if (cells[i][j].adjacent_count > 0) {
+        cells[i][j].is_exposed = true;
         document.querySelector(`#r_${i}_c_${j}`).innerHTML =
           cells[i][j].adjacent_count;
         document.querySelector(`#r_${i}_c_${j}`).style.backgroundColor =
@@ -192,8 +203,8 @@ function CheckCell(i, j) {
 }
 
 function Around(iX, iY) {
-  if (iX <= row_max - 1 && iX >= 0) {
-    if (iY <= col_max - 1 && iY >= 0) {
+  if (iX <= games[gm].row_max - 1 && iX >= 0) {
+    if (iY <= games[gm].col_max - 1 && iY >= 0) {
       cells[iX][iY].adjacent_count = cells[iX][iY].adjacent_count + 1;
     }
   }
