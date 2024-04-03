@@ -29,20 +29,11 @@ var games = [
   }
 ]
 
-var displayScreenStyle = [
-  {
-    fs: "100px",
-    shiftTop: "50%",
-    shiftLeft: "50%"
-  },
-  {
 
-  }, {}
-]
 var startGame = false;
 var iX, iY, gm;
 var showedBomb, totalBombExposed = 0;
-var displayScreen;
+var displayScreen, shiftPressed;
 window.onload = function () {
   console.clear();
   var toAppend = document.createElement("div");
@@ -83,25 +74,38 @@ function NewGrid() {
   BindGrid();
 }
 function Show() {
-  if (cells[iX][iY].adjacent_count == 0 && !cells[iX][iY].is_mine)
+  if (cells[iX][iY].adjacent_count == 0 && !cells[iX][iY].is_mine) {
     CheckCell(iX, iY, cells[iX][iY]);
+    return 0;
+  }
   if (cells[iX][iY].adjacent_count > 0 && !cells[iX][iY].is_mine) {
     document.querySelector(`#r_${iX}_c_${iY}`).innerHTML =
       cells[iX][iY].adjacent_count;
     document.querySelector(`#r_${iX}_c_${iY}`).style.backgroundColor = "green";
+    return 0;
   }
   if (cells[iX][iY].is_mine) {
-    document.querySelector(
-      `#r_${iX}_c_${iY}`
-    ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
-    displayScreen.innerHTML = `YOU <br> LOST`;
-    displayScreen.style.display = "block";
-    displayScreen.style.color = "red";
-
+    if (!shiftPressed) {
+      document.querySelector(
+        `#r_${iX}_c_${iY}`
+      ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
+      displayScreen.innerHTML = `YOU <br> LOST`;
+      displayScreen.style.display = "block";
+      displayScreen.style.color = "red";
+    }
+    else if (shiftPressed) {
+      document.querySelector(
+        `#r_${iX}_c_${iY}`
+      ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
+      return 1;
+    }
   }
+
+  
 }
 function ShowGrid() {
-  totalBombExposed += showedBomb;
+
+  totalBombExposed += Show();
   if (totalBombExposed == games[gm].num_mines) {
     displayScreen.innerHTML = `YOU <br> WIN`;
     displayScreen.style.display = "block";
@@ -109,34 +113,20 @@ function ShowGrid() {
   }
 }
 function ProccessClick(event) {
+  var currentSplit = this.value.split("_");
+  iX = currentSplit[1];
+  iY = currentSplit[3];
   if (!startGame) {
     Begin();
     startGame = true;
   }
-  var currentSplit = this.value.split("_");
-  iX = currentSplit[1];
-  iY = currentSplit[3];
   if (cells[iX][iY].is_exposed == false) {
     if (event.shiftKey) {
-      console.log(cells[iX][iY]);
-      console.log("You have click with shiftKey");
-      if (cells[iX][iY].is_mine) {
-        showedBomb = 1;
-        document.querySelector(
-          `#r_${iX}_c_${iY}`
-        ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
-        ShowGrid();
-        
-      } else if (!cells[iX][iY].is_mine) {
-        document.querySelector(
-          `#r_${iX}_c_${iY}`
-        ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
-      }
-    } else {
-      Show();
+      shiftPressed = true;
     }
+    else shiftPressed = false;
+    ShowGrid();
   }
-
   cells[iX][iY].is_exposed = true;
 }
 function BindGrid() {
@@ -152,7 +142,7 @@ function RandomCells() {
   while (i < games[gm].num_mines) {
     r = Math.floor(Math.random() * games[gm].row_max);
     c = Math.floor(Math.random() * games[gm].col_max);
-    if (cells[r][c].is_mine == false) {
+    if (cells[r][c].is_mine == false && r != iX && c != iY) {
       cells[r][c].is_mine = true;
       i++;
     }
