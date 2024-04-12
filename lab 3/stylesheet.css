@@ -1,4 +1,18 @@
-#body-div{
-    display: grid;
-    grid-template-columns: repeat(2,auto);
+#body-div {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+}
+
+#divOutput {
+  grid-column: 1 / span 2;
+}
+table {
+  width: 100%;
+}
+td {
+  background-color: rgb(144, 255, 144);
+  border: solid 1px black;
+  margin: 30px;
+  font-weight: bolder;
+  width: 25%;
 }

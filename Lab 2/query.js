@@ -22,29 +22,29 @@ var games = [
     num_mines: 10,
     row_max: 10,
     col_max: 10,
-    bomb_size: 60
+    bomb_size: 60,
   },
   {
     diffculty: "Medium",
     num_mines: 40,
     row_max: 18,
     col_max: 18,
-    bomb_size: 30
+    bomb_size: 30,
   },
   {
     diffculty: "Hard",
     num_mines: 99,
     row_max: 24,
     col_max: 24,
-    bomb_size: 25
-  }
-]
+    bomb_size: 25,
+  },
+];
 var startGame = false;
 var iX, iY, gm;
-var showedBomb, totalBombExposed = 0;
+var showedBomb,
+  totalBombExposed = 0;
 var displayScreen, shiftPressed;
 //***********************************************************************************
-
 
 //********************************************************************************************
 //Method: window.onload
@@ -59,13 +59,13 @@ window.onload = function () {
   document.getElementById("outside").appendChild(toAppend);
   document.querySelector("#NewGame").addEventListener("click", NewGame);
   document.querySelector("#Difficulty").addEventListener("change", NewGame);
-  displayScreen = document.querySelector('#screen');
+  displayScreen = document.querySelector("#screen");
   NewGame();
 };
 
 //********************************************************************************************
 //Method: NewGame()
-//Purpose: Initialize game state 
+//Purpose: Initialize game state
 //Parameters:
 //Returns: nothing
 //*********************************************************************************************
@@ -110,29 +110,33 @@ function NewGrid() {
 //Returns: 1 if expose is a bomb else 0
 //*********************************************************************************************
 function Show() {
-  if (cells[iX][iY].adjacent_count == 0 && !cells[iX][iY].is_mine) {
-    CheckCell(iX, iY, cells[iX][iY]);
-    return 0;
+  if (!cells[iX][iY].is_mine) {
+    if (!shiftPressed) {
+      if (cells[iX][iY].adjacent_count == 0) {
+        CheckCell(iX, iY, cells[iX][iY]);
+        return 0;
+      }
+      if (cells[iX][iY].adjacent_count > 0 && !cells[iX][iY].is_mine) {
+        document.querySelector(`#r_${iX}_c_${iY}`).innerHTML =
+          cells[iX][iY].adjacent_count;
+        document.querySelector(`#r_${iX}_c_${iY}`).style.backgroundColor =
+          "green";
+        return 0;
+      }
+    } else {
+      Lost(iX, iY);
+    }
   }
-  if (cells[iX][iY].adjacent_count > 0 && !cells[iX][iY].is_mine) {
-    document.querySelector(`#r_${iX}_c_${iY}`).innerHTML =
-      cells[iX][iY].adjacent_count;
-    document.querySelector(`#r_${iX}_c_${iY}`).style.backgroundColor = "green";
-    return 0;
-  }
+
   if (cells[iX][iY].is_mine) {
     if (!shiftPressed) {
+      Lost(iX, iY);
+    } else if (shiftPressed) {
       document.querySelector(
         `#r_${iX}_c_${iY}`
-      ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
-      displayScreen.innerHTML = `YOU <br> LOST`;
-      displayScreen.style.display = "block";
-      displayScreen.style.color = "red";
-    }
-    else if (shiftPressed) {
-      document.querySelector(
-        `#r_${iX}_c_${iY}`
-      ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${games[gm].bomb_size - 10}px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
+      ).innerHTML = `<img src="./flag.jpg" alt="" style="width: ${
+        games[gm].bomb_size - 10
+      }px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
       return 1;
     }
   }
@@ -171,8 +175,7 @@ function ProccessClick(event) {
   if (cells[iX][iY].is_exposed == false) {
     if (event.shiftKey) {
       shiftPressed = true;
-    }
-    else shiftPressed = false;
+    } else shiftPressed = false;
     ShowGrid();
   }
   cells[iX][iY].is_exposed = true;
@@ -209,7 +212,6 @@ function RandomCells() {
     }
   }
 }
-
 
 //********************************************************************************************
 //Method: CountAdjacent()
@@ -285,11 +287,28 @@ function Around(ir, ic) {
 
 //********************************************************************************************
 //Method: Begin()
-//Purpose: for it to trigger RandomCells and CountAdjacent on first click 
+//Purpose: for it to trigger RandomCells and CountAdjacent on first click
 //Parameters:
 //Returns: nothing
 //*********************************************************************************************
 function Begin() {
   RandomCells();
   CountAdjacent();
+}
+
+//********************************************************************************************
+//Method: Lost()
+//Purpose: stop the game when player is lost
+//Parameters:
+//Returns: nothing
+//*********************************************************************************************
+function Lost(i, j) {
+  document.querySelector(
+    `#r_${i}_c_${j}`
+  ).innerHTML = `<img src="./lab2-boom.png" alt="" style="width: ${
+    games[gm].bomb_size - 10
+  }px;height: ${parseInt(games[gm].bomb_size) - 10}px;" >`;
+  displayScreen.innerHTML = `YOU <br> LOST`;
+  displayScreen.style.display = "block";
+  displayScreen.style.color = "red";
 }
