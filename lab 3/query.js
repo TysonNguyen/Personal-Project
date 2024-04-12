@@ -60,7 +60,7 @@ function AjaxRequest(
 }
 
 function ajaxFail(jqHQR, status, errormessage) {
-  console.alert(`GET fail: ${status}`);
+  alert(`GET fail: ${status}`);
   console.log(errormessage);
 }
 
