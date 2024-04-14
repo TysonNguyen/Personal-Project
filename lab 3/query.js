@@ -37,7 +37,7 @@ function addTag_BtnEvent() {
     objectAdd["tagDesc"] = $("#tagName").val();
     objectAdd["tagMin"] = $("#Minimum").val();
     objectAdd["tagMax"] = $("#Maximum").val();
-    AjaxRequest(myURL, "POST", objectAdd, "html", ShowAllTags, ajaxFail);
+    AjaxRequest(myURL, "POST", objectAdd, "html", ajaxSuccess, ajaxFail);
   } else console.log("U are missing input");
 }
 
@@ -63,7 +63,9 @@ function ajaxFail(jqHQR, status, errormessage) {
   alert(`GET fail: ${status}`);
   console.log(errormessage);
 }
-
+function ajaxSuccess(responseData, returnStatus) {
+  alert(responseData.status);
+}
 function ShowAllTags(responseData, returnStatus) {
   console.log(`POST done: ${returnStatus}`);
   console.log(responseData);
@@ -97,6 +99,13 @@ function Validate() {
 
   if (maximum_txtBox.val() == "") {
     maximum_txtBox.focus();
+    return false;
+  }
+
+  if (minimum_txtBox.val() > maximum_txtBox.val()) {
+    alert("Min is greater than Max");
+    minimum_txtBox.focus();
+    return false;
   }
   return true;
 }
