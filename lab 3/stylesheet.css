@@ -14,13 +14,36 @@ header {
   grid-template-columns: repeat(2, auto);
   text-align: center;
 }
+#body-div > * {
+  margin: 10px;
+}
 #body-div > div:nth-child(1),
 #body-div > div:nth-child(3),
-#body-div > div:nth-child(5) {
+#body-div > div:nth-child(5),
+#body-div > div:nth-child(15) {
   text-align: right;
+  margin-right: 10px;
+}
+#body-div > div:nth-child(2),
+#body-div > div:nth-child(4),
+#body-div > div:nth-child(6),
+#body-div > div:nth-child(16) {
+  text-align: left;
+  margin-left: 10px;
+}
+#body-div > div:nth-child(7),
+#body-div > div:nth-child(8),
+#body-div > div:nth-child(11),
+#body-div > div:nth-child(14) {
+  grid-column: 1 / span 2;
+}
+button,
+select {
+  width: 100%;
 }
 #divOutput {
   grid-column: 1 / span 2;
+  text-align: left;
 }
 table {
   width: 100%;

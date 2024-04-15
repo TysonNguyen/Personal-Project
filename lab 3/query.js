@@ -19,6 +19,7 @@ function main() {
   $(`#divOutput`).append(table);
   $("#getAll_Btn").click(getAll_BtnEvent);
   $("#addTag_Btn").click(addTag_BtnEvent);
+  $("#getLive_Btn").click(getLive_BtnEvent);
 }
 
 //***********************************************************************************
@@ -28,7 +29,12 @@ function getAll_BtnEvent() {
   objectRequest["tagId"] = "all";
   AjaxRequest(myURL, "POST", objectRequest, "html", ShowAllTags, ajaxFail);
 }
-
+function getLive_BtnEvent() {
+  let liveObject = {};
+  liveObject["action"] = "live";
+  liveObject["tagDescription"] = `A`;
+  AjaxRequest(myURL, "POST", liveObject, "html", ajaxSuccess, ajaxFail);
+}
 function addTag_BtnEvent() {
   if (Validate()) {
     console.log("Valid");
@@ -64,7 +70,8 @@ function ajaxFail(jqHQR, status, errormessage) {
   console.log(errormessage);
 }
 function ajaxSuccess(responseData, returnStatus) {
-  alert(responseData.status);
+  alert(responseData.returnStatus);
+  console.log(responseData);
 }
 function ShowAllTags(responseData, returnStatus) {
   console.log(`POST done: ${returnStatus}`);
