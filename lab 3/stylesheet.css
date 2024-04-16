@@ -43,15 +43,37 @@ select {
 }
 #divOutput {
   grid-column: 1 / span 2;
-  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr;
 }
+
 table {
+  grid-column: 2;
   width: 100%;
 }
-td {
+tr:nth-child(2n - 1) {
   background-color: rgb(144, 255, 144);
+}
+tr:nth-child(2n) {
+  background-color: white;
+}
+td {
   border: solid 1px black;
-  margin: 30px;
   font-weight: bolder;
-  width: 25%;
+}
+.display-none {
+  display: none;
+}
+.display-back {
+  display: table-header-group;
+}
+.red::-webkit-meter-optimum-value {
+  background: red;
+}
+.green::-webkit-meter-optimum-value {
+  background: green;
+}
+#divStatus {
+  grid-column: 1 / span 2;
+  text-align: left;
 }

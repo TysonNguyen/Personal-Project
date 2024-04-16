@@ -36,14 +36,40 @@
       <div><button id="addTag_Btn">Add Tag</button></div>
       <div><button id="getAll_Btn">Get All</button></div>
       <div><label for="">Tag by Filter:</label></div>
-      <div><input type="text" name="" id="all" /></div>
-      <div><button>Filter</button></div>
-      <div><select name="" id=""></select></div>
-      <div><button>Get Historical</button></div>
+      <div><input type="text" name="" id="Filter" value="tyson" /></div>
+      <div><button id="filter_Btn">Filter</button></div>
+      <div><select name="" id="savedFilter_Select"></select></div>
+      <div><button id="getHistorical_Btn">Get Historical</button></div>
       <div><button id="getLive_Btn">Get Live</button></div>
       <div><label for="">Live</label></div>
-      <div><input type="checkbox" name="" id="" /></div>
-      <div id="divOutput">No Div Content Yet</div>
+      <div><input type="checkbox" name="" id="Live_chkBox" /></div>
+      <div id="divOutput">
+        <div id="divStatus">No Content Here</div>
+        <table id="tarTable">
+          <thead class="" id="thead1">
+            <td>tagId</td>
+            <td>tagDescription</td>
+            <td>tagMin</td>
+            <td>tagMax</td>
+          </thead>
+          <thead id="thead2">
+            <td>tagId</td>
+            <td>tagDescription</td>
+            <td>tagMin</td>
+            <td>tagMax</td>
+            <td>Value</td>
+            <td>Gauge</td>
+          </thead>
+          <thead id="thead3">
+            <td>Minimum</td>
+            <td>Maximum</td>
+            <td>Value</td>
+            <td>TimeStamp</td>
+            <td>Gauge</td>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>
