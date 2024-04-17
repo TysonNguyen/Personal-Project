@@ -1,30 +1,31 @@
-var MTGurl = "https://magicthegathering.io/";
+var MTGurl = "https://api.scryfall.com/cards/search";
 
-$(document).ready(main);
+$(main);
 
-function main(){
-    console.log("hello")
-    const mtg = require('mtgsdk')
-
-// Get all cards
-mtg.card.all()
-.on('data', function (card) {
-  console.log(card.name)
-});
-
-// Filter Cards
-mtg.card.all({ supertypes: 'legendary', types: 'creature', colors: 'red,white' })
-.on('data', function (card) {
-    console.log(card.name)
-});
+function main() {
+  $(`#testRequest`).click(btnClickEvent);
 }
 
+function btnClickEvent() {
+  let ob = {};
+  ob.q = "Tymna";
+  $.ajax({
+    url: MTGurl,
+    dataType: "json",
+    data: ob,
+    type: "GET",
+    success: SuccessAjax,
+    error: ErrorAjax,
+  });
+}
+function SuccessAjax(returnData, msg) {
+  console.log(returnData);
+  for (let i = 0; i < returnData.total_cards; i++) {
+    let imgElement = document.createElement("img");
+    console.log(returnData.data[i].image_uris.normal);
+    $(imgElement).prop("src", returnData.data[i].image_uris.normal);
+    $("body").append(imgElement);
+  }
+}
 
-// function ajaxFail(jqHQR, status, errormessage) {
-//     alert(`GET fail: ${status}`);
-//     console.log(errormessage);
-// }
-
-// function ajaxSuccess(responseData, returnStatus) {
-//     console.log(responseData);
-// }
+function ErrorAjax(xqh, msg) {}
