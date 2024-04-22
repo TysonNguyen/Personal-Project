@@ -14,7 +14,7 @@ var myURL = "https://thor.cnt.sast.ca/~demo/cmpe2000/lab03_webservice.php";
 var xValues = [];
 var yValues= [] ;
 var iArrayCount = 0;
-var liveValue,liveTime;
+var liveValue,liveTime,liveMin,liveMax,returnLength;
 var timer;
 //***********************************************************************************
 
@@ -59,7 +59,9 @@ function addTag_BtnEvent() {
     AjaxRequest(myURL, "POST", objectAdd, "html", ajaxSuccess, ajaxFail);
   } else console.log("U are missing input");
 }
-
+function ajaxSuccess(){
+  
+}
 //Method: AjaxRequest(passedURL,passedType,passedData,passedDataType,successFunction,errorFunction)
 //Purpose: Request Ajax from sever
 //Parameters:
@@ -157,6 +159,7 @@ function ShowAllTags(responseData, returnStatus) {
   $("#thead1").prop("class", "display-back");
   $("#thead2").prop("class", "display-none");
   $("#thead3").prop("class", "display-none");
+  $("#myChart").css("display","none");
 }
 
 //Method: getLive_BtnEvent()
@@ -183,7 +186,8 @@ function ShowGauge(responseData, returnStatus) {
   let tarTable = $(`#tarTable`);
   var extractedData = responseData.data;
   tarTable.find("tbody").empty();
-  console.log(extractedData)
+  returnLength = extractedData.length
+  console.log(returnLength)
   for (key of extractedData) {
     var tr = document.createElement("tr");
     for (tag in key) {
@@ -193,6 +197,16 @@ function ShowGauge(responseData, returnStatus) {
         liveValue = Math.round(key[tag]);
         liveTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`;
         td.appendChild(document.createTextNode(`${liveValue}`));
+      }
+      else if(tag== "tagMin")
+      {
+        liveMin = Math.round(key[tag]);
+        td.appendChild(document.createTextNode(`${liveMin}`));
+      }
+      else if(tag == "tagMax")
+      {
+        liveMax = Math.round(key[tag]);
+        td.appendChild(document.createTextNode(`${liveMax}`));
       }
       else td.appendChild(document.createTextNode(`${key[tag]}`));
       tr.append(td);
@@ -218,6 +232,8 @@ function ShowGauge(responseData, returnStatus) {
   $("#thead1").prop("class", "display-none");
   $("#thead2").prop("class", "display-back");
   $("#thead3").prop("class", "display-none");
+  if(!$("#Live_chkBox").is(":checked") )
+  $("#myChart").css("display","none");
 }
 
 //Method: filter_BtnEvent()
@@ -262,6 +278,7 @@ function getHistorical_BtnEvent() {
   let getHistoricalObject = {};
   getHistoricalObject.action = "historical";
   getHistoricalObject.tagId = $("#savedFilter_Select").val();
+  if($("#savedFilter_Select").val() != null)
   AjaxRequest(
     myURL,
     "POST",
@@ -270,6 +287,7 @@ function getHistorical_BtnEvent() {
     ShowHistorical,
     ajaxFail
   );
+  else alert("Empty historical");
 }
 
 //Method: ShowHistorical(responseData, returnStatus)
@@ -315,6 +333,7 @@ function ShowHistorical(responseData, returnStatus) {
   $("#thead1").prop("class", "display-none");
   $("#thead2").prop("class", "display-none");
   $("#thead3").prop("class", "display-back");
+  $("#myChart").css("display","none");
 }
 
 //Method: Live_chkBoxEvent()
@@ -325,13 +344,18 @@ function ShowHistorical(responseData, returnStatus) {
 function Live_chkBoxEvent() {
   if ($(this).is(":checked")) {
     timer = setInterval(() => {
-      Graph();
+      getLive_BtnEvent();
+      if(returnLength == 1)
+      {
+        $("#myChart").css("display","block");
+        Graph();
+      }
+      
     }, 500);
   } else clearInterval(timer);
 }
 
 function Graph(){  
-  getLive_BtnEvent();
   if(iArrayCount < 10)
   {
     xValues[iArrayCount] = liveTime;
@@ -361,7 +385,7 @@ function Graph(){
   options: {
     legend: {display: false},
     scales: {
-      yAxes: [{ticks: {min: 1, max:11}}],
+      yAxes: [{ticks: {min: liveMin, max:liveMax}}],
     }
   }
   });

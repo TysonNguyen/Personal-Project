@@ -9,7 +9,7 @@ window.onload = function () {
   //   Buttons[j].addEventListener("mouseenter", Clicked);
   // }
   // document.querySelector("#rightClick").addEventListener("click",AlohaClick)
-  Graph();
+  //Graph();
   $("#testJson").click(TestJson);
 };
 
@@ -58,8 +58,9 @@ window.onload = function () {
 // }
 
 function TestJson() {
-  $.ajax({
-    url: "./data.json",
-    type: "POST",
-  });
+  $.getJSON("data.json",function(data){
+    console.log(data);  
+  })
 }
+
+
