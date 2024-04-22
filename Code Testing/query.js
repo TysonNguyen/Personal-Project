@@ -10,6 +10,7 @@ window.onload = function () {
   // }
   // document.querySelector("#rightClick").addEventListener("click",AlohaClick)
   Graph();
+  $("#testJson").click(TestJson);
 };
 
 // function Clicked(e) {
@@ -22,7 +23,7 @@ window.onload = function () {
 //   document.body.style.backgroundColor = this.style.backgroundColor;
 // }
 // function ReturnNum(iX) {
-  
+
 //   if(iX < 1)
 //   return 0;
 //   else return 1;
@@ -31,27 +32,34 @@ window.onload = function () {
 //   console.log(e.which);
 // }
 
-function Graph(){
-  var xValues = [50,60,70,80,90,100,110,120,130,140,150];
-  var yValues = [1,3,5,4,6,11,10,9,7,6,5];
+// function Graph(){
+//   var xValues = [50,60,70,80,90,100,110,120,130,140,150];
+//   var yValues = [1,3,5,4,6,11,10,9,7,6,5];
 
-  new Chart("myChart", {
-  type: "line",
-  data: {
-    labels: xValues,
-    datasets: [{
-      fill: false,
-      lineTension: 0,
-      backgroundColor: "rgba(0,0,255,1.0)",
-      borderColor: "rgba(0,0,255,0.1)",
-      data: yValues
-    }]
-  },
-  options: {
-    legend: {display: false},
-    scales: {
-      yAxes: [{ticks: {min: 1, max:11}}],
-    }
-  }
+//   new Chart("myChart", {
+//   type: "line",
+//   data: {
+//     labels: xValues,
+//     datasets: [{
+//       fill: false,
+//       lineTension: 0,
+//       backgroundColor: "rgba(0,0,255,1.0)",
+//       borderColor: "rgba(0,0,255,0.1)",
+//       data: yValues
+//     }]
+//   },
+//   options: {
+//     legend: {display: false},
+//     scales: {
+//       yAxes: [{ticks: {min: 1, max:11}}],
+//     }
+//   }
+//   });
+// }
+
+function TestJson() {
+  $.ajax({
+    url: "./data.json",
+    type: "POST",
   });
 }
