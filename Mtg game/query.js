@@ -4,7 +4,7 @@ var strRequest;
 $(main);
 
 function main() {
-  $(`#testRequest`).click(btnClickRequest);
+  $(`#search_btn`).click(btnClickRequest);
   $(`#testAdd`).click(btnClickAdd);
 }
 
@@ -44,9 +44,7 @@ function SuccessAjax(returnData, msg) {
 function ErrorAjax(xqh, msg) {
 
   $("#body-div").empty();
-  $("#body-div").html(strRequest);
-
-  alert(msg);
+  $("#body-div").html(`There is no card with: ` + strRequest);
 }
 
 function CardClick(){

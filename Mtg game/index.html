@@ -9,11 +9,38 @@
     <link rel="stylesheet" href="./stylesheet.css" />
   </head>
   <body>
-    <button id="testRequest">testRequest</button>
-    <input type="text" name="" id="cardName" placeholder="card name">
-    <input type="text" name="" id="cardMV" placeholder="card mana value">
-    <input type="text" name="" id="cardSet" placeholder="card set">
-    <button id="testAdd">testAdd</button>
-    <div id="body-div"></div>
+    <div id="header" style="display: flex;">
+      <img id="logo" style="width: 20px; height: 20px;" src="./logo.PNG" alt="">
+      <header>Search Card Power</header>
+    </div>
+    
+    <div id="main">
+      <div>
+        <label for="cardName">Card Name:</label> 
+        <input type="text" name="" id="cardName" placeholder="Card Name">
+      </div>
+      <div>
+        <label for="oracleText" >Oracle Text:</label>
+        <input type="text" name="" id="oracleText" placeholder="Text in the card">
+      </div>
+      <div>
+        <label for="typeLine" >Type</label>
+        <input type="text" name="" id="typeLine">
+        <select name="" id=""></select>
+      </div>
+      <div>
+        <label for="cardMV">Card Mana Value:</label>
+        <input type="text" name="" id="cardMV" placeholder="card mana value">
+      </div>
+      <div>
+        <label for="cardSet">Card Set:</label>
+        <input type="text" name="" id="cardSet" placeholder="card set">
+      </div>
+      <button id="search_btn">Search</button>
+    </div>
+    
+    <div id="footer">
+
+    </div>
   </body>
 </html>
