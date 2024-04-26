@@ -58,9 +58,7 @@ window.onload = function () {
 // }
 
 function TestJson() {
-  $.getJSON("data.json",function(data){
-    console.log(data);  
-  })
+  $.getJSON("data.json", function (data) {
+    console.log(JSON.parse(data));
+  });
 }
-
-
