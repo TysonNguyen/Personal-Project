@@ -6,41 +6,50 @@
     <title>Tyson Project mtg</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="./query.js"></script>
-    <link rel="stylesheet" href="./stylesheet.css" />
   </head>
   <body>
-    <div id="header" style="display: flex;">
-      <img id="logo" style="width: 20px; height: 20px;" src="./logo.PNG" alt="">
+    <div id="header" style="display: flex">
+      <a href="../index.html"
+        ><img
+          id="logo"
+          style="width: 20px; height: 20px"
+          src="./logo.PNG"
+          alt=""
+      /></a>
       <header>Search Card Power</header>
+      <a href="./rule/rule.html">Ruling</a>
     </div>
-    
+
     <div id="main">
       <div>
-        <label for="cardName">Card Name:</label> 
-        <input type="text" name="" id="cardName" placeholder="Card Name">
+        <label for="cardName">Card Name:</label>
+        <input type="text" name="" id="cardName" placeholder="Card Name" />
       </div>
       <div>
-        <label for="oracleText" >Oracle Text:</label>
-        <input type="text" name="" id="oracleText" placeholder="Text in the card">
+        <label for="oracleText">Oracle Text:</label>
+        <input
+          type="text"
+          name=""
+          id="oracleText"
+          placeholder="Text in the card"
+        />
       </div>
       <div>
-        <label for="typeLine" >Type</label>
-        <input type="text" name="" id="typeLine">
+        <label for="typeLine">Type</label>
+        <input type="text" name="" id="typeLine" />
         <select name="" id=""></select>
       </div>
       <div>
         <label for="cardMV">Card Mana Value:</label>
-        <input type="text" name="" id="cardMV" placeholder="card mana value">
+        <input type="text" name="" id="cardMV" placeholder="card mana value" />
       </div>
       <div>
         <label for="cardSet">Card Set:</label>
-        <input type="text" name="" id="cardSet" placeholder="card set">
+        <input type="text" name="" id="cardSet" placeholder="card set" />
       </div>
       <button id="search_btn">Search</button>
     </div>
-    
-    <div id="footer">
 
-    </div>
+    <div id="footer"></div>
   </body>
 </html>

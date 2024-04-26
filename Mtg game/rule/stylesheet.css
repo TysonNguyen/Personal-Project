@@ -1,0 +1,21 @@
+#body {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+}
+#body > * {
+  grid-column: 1 / span 5;
+}
+#body > table {
+  grid-column: 2 / span 3;
+}
+#body > h1 {
+  text-align: center;
+  color: red;
+}
+td {
+  outline: 1px solid black;
+  font-size: larger;
+}
+tbody > tr > td:nth-child(3n) {
+  width: 50vw;
+}
