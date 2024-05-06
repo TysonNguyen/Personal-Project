@@ -12,10 +12,10 @@
   text-align: center;
   color: red;
 }
-td {
+#body > td {
   outline: 1px solid black;
   font-size: larger;
 }
-tbody > tr > td:nth-child(3n) {
+#body >tbody > tr > td:nth-child(3n) {
   width: 50vw;
 }

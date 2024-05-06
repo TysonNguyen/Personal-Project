@@ -3,53 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tyson Project mtg</title>
+    <title>Home</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="./query.js"></script>
+    <link rel="stylesheet" href="./stylesheet.css">
+    <link rel="stylesheet" href="./index.css">
   </head>
   <body>
-    <div id="header" style="display: flex">
-      <a href="../index.html"
+    <div id="header">
+      <a href="#"
         ><img
           id="logo"
           style="width: 20px; height: 20px"
-          src="./logo.PNG"
+          src="./image/logo.PNG"
           alt=""
       /></a>
       <header>Search Card Power</header>
+      <a href="#">Home</a>
       <a href="./rule/rule.html">Ruling</a>
+      <a href="./search/search.html">Search</a>
     </div>
 
-    <div id="main">
+    <div id="body">
+      <p>Seach for Power</p>
       <div>
-        <label for="cardName">Card Name:</label>
-        <input type="text" name="" id="cardName" placeholder="Card Name" />
+        <input type="text" name="" id="index_seacrh_txtBox">
+      <button id="index_search_btn">Search</button>
       </div>
-      <div>
-        <label for="oracleText">Oracle Text:</label>
-        <input
-          type="text"
-          name=""
-          id="oracleText"
-          placeholder="Text in the card"
-        />
-      </div>
-      <div>
-        <label for="typeLine">Type</label>
-        <input type="text" name="" id="typeLine" />
-        <select name="" id=""></select>
-      </div>
-      <div>
-        <label for="cardMV">Card Mana Value:</label>
-        <input type="text" name="" id="cardMV" placeholder="card mana value" />
-      </div>
-      <div>
-        <label for="cardSet">Card Set:</label>
-        <input type="text" name="" id="cardSet" placeholder="card set" />
-      </div>
-      <button id="search_btn">Search</button>
+      <div id="index_icon"></div>
     </div>
 
-    <div id="footer"></div>
+    <div id="footer">
+      <p>&copy; Tyson Nguyen</p>
+      <a href="https://magic.wizards.com/en">Magic The Gathering</a>
+      <a href="https://scryfall.com/">Scryfall</a>
+      <a href="https://www.moxfield.com/">Moxfield</a>
+      <a href="https://www.mtggoldfish.com/">MTGGoldfish</a>
+      <a href="https://edhrec.com/">EDHREC</a>
+    </div>
   </body>
 </html>
