@@ -1,8 +1,0 @@
-C:\Users\tnguyen248\Documents\GitHub\Personal-Project\Comment Method Generator\Comment Method Generator\bin\Debug\Comment Method Generator.exe.config
-C:\Users\tnguyen248\Documents\GitHub\Personal-Project\Comment Method Generator\Comment Method Generator\bin\Debug\Comment Method Generator.exe
-C:\Users\tnguyen248\Documents\GitHub\Personal-Project\Comment Method Generator\Comment Method Generator\bin\Debug\Comment Method Generator.pdb
-C:\Users\tnguyen248\Documents\GitHub\Personal-Project\Comment Method Generator\Comment Method Generator\obj\Debug\Comment Method Generator.csproj.AssemblyReference.cache
-C:\Users\tnguyen248\Documents\GitHub\Personal-Project\Comment Method Generator\Comment Method Generator\obj\Debug\Comment Method Generator.csproj.SuggestedBindingRedirects.cache
-C:\Users\tnguyen248\Documents\GitHub\Personal-Project\Comment Method Generator\Comment Method Generator\obj\Debug\Comment Method Generator.csproj.CoreCompileInputs.cache
-C:\Users\tnguyen248\Documents\GitHub\Personal-Project\Comment Method Generator\Comment Method Generator\obj\Debug\Comment Method Generator.exe
-C:\Users\tnguyen248\Documents\GitHub\Personal-Project\Comment Method Generator\Comment Method Generator\obj\Debug\Comment Method Generator.pdb
