@@ -1,0 +1,7 @@
+.toDo:hover {
+  text-decoration: line-through;
+  background-color: red;
+}
+.toDo {
+  text-align: center;
+}
