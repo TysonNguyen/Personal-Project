@@ -1,7 +1,30 @@
-.toDo:hover {
-  text-decoration: line-through;
-  background-color: red;
-}
-.toDo {
+h1 {
   text-align: center;
+  font-weight: lighter;
+  margin-bottom: 30px;
+}
+
+#div_Input {
+  display: flex;
+  justify-content: center;
+}
+
+#div_Input > * {
+  margin: 10px;
+}
+#div_Display > div {
+  display: flex;
+  justify-content: center;
+  border: 1px solid black;
+  margin: 10px;
+}
+
+#div_Display > div > * {
+  margin: 10px;
+}
+
+
+#div_Display > div >button {
+  width: 10%;
+
 }
