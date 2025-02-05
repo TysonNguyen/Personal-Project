@@ -1,0 +1,63 @@
+const int pinC1 = 14;
+const int pinC2 = 13;
+const int pinRed = 25;
+const int pinGreen = 33;
+const int pinBlue = 32;
+volatile int ipinC1Rise = 0;
+volatile int ipinC2Rise = 0;
+volatile bool bRised = false;
+// put function declarations here:
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(pinC1, INPUT);
+  pinMode(pinC2, INPUT);
+
+  //Deletable
+  pinMode(pinRed, OUTPUT);
+  pinMode(pinGreen, OUTPUT);
+  pinMode(pinBlue, OUTPUT);
+  //Deletable
+
+  attachInterrupt(digitalPinToInterrupt(pinC1),pinC1Handler,RISING);
+  attachInterrupt(digitalPinToInterrupt(pinC2),pinC2Handler,RISING);
+  Serial.begin(115200);
+}
+
+void loop() {
+  //Display
+  delay(100);
+  if(ipinC1Rise > ipinC2Rise)
+  {
+    Serial.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+  }
+  else if (ipinC1Rise < ipinC2Rise)
+  {
+    Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  }
+  else
+  {
+    Serial.println("Stopped");
+  }
+  ipinC1Rise = 0;
+  ipinC2Rise = 0;
+  bRised = false;
+}
+
+// put function definitions here:
+void pinC1Handler()
+{
+  if(!bRised)
+  {
+    ipinC1Rise = micros();
+    bRised = true;
+  }
+}
+
+void pinC2Handler()
+{
+    if(!bRised)
+  {
+    ipinC2Rise = micros();
+    bRised = true;
+  }
+}
