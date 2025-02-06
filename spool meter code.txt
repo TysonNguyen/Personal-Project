@@ -26,38 +26,33 @@ void setup() {
 void loop() {
   //Display
   delay(100);
-  if(ipinC1Rise > ipinC2Rise)
+  if(ipinC1Rise != 0 && ipinC2Rise != 0)
   {
-    Serial.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    if(ipinC1Rise > ipinC2Rise)
+    {
+      Serial.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    }
+    else if (ipinC1Rise < ipinC2Rise)
+    {
+      Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+    }
+    ipinC1Rise = 0;
+    ipinC2Rise = 0;
   }
-  else if (ipinC1Rise < ipinC2Rise)
-  {
-    Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-  }
-  else
-  {
-    Serial.println("Stopped");
-  }
-  ipinC1Rise = 0;
-  ipinC2Rise = 0;
-  bRised = false;
+      else
+    {
+      Serial.println("Stopped");
+    }
 }
 
 // put function definitions here:
 void pinC1Handler()
 {
-  if(!bRised)
-  {
-    ipinC1Rise = micros();
-    bRised = true;
-  }
+  ipinC1Rise = micros();
 }
 
 void pinC2Handler()
 {
-    if(!bRised)
-  {
-    ipinC2Rise = micros();
-    bRised = true;
-  }
+  ipinC2Rise = micros();
+
 }
