@@ -7,6 +7,8 @@ volatile int ipinC1Rise = 0;
 volatile int ipinC2Rise = 0;
 volatile bool bRised = false;
 // put function declarations here:
+void pinC1Handler();
+void pinC2Handler();
 void setup() {
   // put your setup code here, to run once:
   pinMode(pinC1, INPUT);
@@ -39,10 +41,6 @@ void loop() {
     ipinC1Rise = 0;
     ipinC2Rise = 0;
   }
-      else
-    {
-      Serial.println("Stopped");
-    }
 }
 
 // put function definitions here:
