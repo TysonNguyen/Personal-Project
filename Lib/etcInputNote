@@ -1,0 +1,55 @@
+/*
+Channel     Pin 
+0           9
+1           10
+2           11
+3           12
+4           15
+5           16
+6           17
+7           18
+
+Setting Legacy TSCR1 &= ~TSCR1_PRNT_MASK;
+Then set the prescaler TSCR2_PR*X*_MASK
+*using bit field ex: TSCR2_PR0 = 1;*
+*Math : 8Mhz bus / 8 = 1Mhz tick time => 1us per tick
+       PR2     PR1     PR0
+1       0       0       0
+2       0       0       1   
+4       0       1       0   
+8       0       1       1    
+16      1       0       0    
+32      1       0       1    
+64      1       1       0   
+128     1       1       1     
+
+Setting Precision  : TSCR1 |= TSCR1_PRNT_MASK;
+then set the presicion scaler PTPSR = *any* - 1;
+*Math: 20Mhz bus / *any* = 1Mhz => 1us per tick 
+
+Enable and Clear all Flag (use at the end): TSCR1 = TSCR1_TEN_MASK | TSCR1_TFFCA_MASK;
+
+Setting as input
+TIOS_IOS*X* = 0;
+
+Capture settings - TCTL3/TCTL4
+  EDGxB   EDGxA
+    0       0  Capture disabled
+    0       1  Capture on rising edges only
+    1       0  Capture on falling edges only
+    1       1  Capture on any edge (rising or falling)
+
+TCTL3 : 7 -> 4
+TCTL4 : 3 -> 0
+
+TIE_C*X*I = 1;    //Enable interrupt for TC*X*
+
+Pulse Accummulator B is connected to TC7
+PACTL =  PACTL_PAEN_MASK // Enable Pulse accumulator 
+
+Pulse Accummulator B is connected to TC0
+PBCTL = PBCTL_PBEN_MASK //Enable Pulse accumulator
+
+reading value 
+*variabl* = PACN32;
+*/

@@ -1,0 +1,31 @@
+/*
+
+Clock Prescaler PCKB is for 2,3,6,7
+Clock Prescaler PCKB is for 1,4,5,0
+Example 20MHz / Prescaler CH7(this is one) = 20MHz
+                    PWMPRCLK_PCKA2   PWMPRCLK_PCKA1   PWMPRCLK_PCKA0
+                    PWMPRCLK_PCKB2   PWMPRCLK_PCKB1   PWMPRCLK_PCKB0
+Bus Speed           0                0                0
+Bus Speed/2         0                0                1
+Bus Speed/4         0                1                0
+Bus Speed/8         0                1                1
+Bus Speed/16        1                0                0
+Bus Speed/32        1                0                1
+Bus Speed/64        1                1                0
+Bus Speed/128       1                1                1
+
+PWMCTL_CON67 = 1;
+
+
+Each channel has clock B and SB (0 and 1)
+This will be use for single channel
+PWMCLK_PCLK*X* = 0; //Clock B for channel X
+PWMCLK_PCLK*X* = 1; //Clock SB for channel X
+
+Polarity of Channel *This is high at the beginning of the period*
+PWMPOL_PPOL*X* = 1;  
+
+Enable Channel 
+PWME |= PWME_PWME*X*_MASK;
+
+*/

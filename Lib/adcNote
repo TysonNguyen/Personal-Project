@@ -1,0 +1,89 @@
+/*
+Channel         Pin
+7               81
+6               79
+5               77
+4               75
+3               73
+2               71
+1               69
+0               67
+
+Regular
+  ATD0CTL2 = ATD0CTL2_ADPU_MASK | ATD0CTL2_AFFC_MASK | ATD0CTL2_AWAI; 
+With Interrupt
+  ATD0CTL2 = ATD0CTL2_ADPU_MASK | ATD0CTL2_AFFC_MASK | ATD0CTL2_ASCIE_MASK;
+
+ 
+ATD0CTL3 
+Conversion Rate 
+1 : ATD0CTL3_S1C_MASK
+2 : ATD0CTL3_S2C_MASK
+3 : ATD0CTL3_S2C_MASK | ATD0CTL3_S1C_MASK
+4 : ATD0CTL3_S4C_MASK
+5 : ATD0CTL3_S4C_MASK | ATD0CTL3_S1C_MASK
+6 : ATD0CTL3_S4C_MASK | ATD0CTL3_S2C_MASK
+7 : ATD0CTL3_S3C_MASK | ATD0CTL3_S2C_MASK | ATD0CTL3_S1C_MASK
+8 : *nothing*
+
+Free Mode               FRZ1    FRZ0
+Continous conversion :  0       0       
+Reversed                0       1       ATD0CTL3_FRZ0_MASK
+Finished then freeze :  1       0       ATD0CTL3_FRZ1_MASK
+Freeze immediately   :  1       1       ATD0CTL3_FRZ1_MASK | ATD0CTL3_FRZ0_MASK
+
+
+ATD0CTL4
+SRES8 : Resolution ( 0 : for 10 bit and 1 : for 8 bit) 
+Sample Time         SMP1    SMP0
+2 A/D               0       0           
+4 A/D               0       1           ATD0CTL4_SMP0
+8 A/D               1       0           ATD0CTL4_SMP1
+16 A/D              1       1           ATD0CTL4_SMP1 | ATD0CTL4_SMP0
+ADC Clock = BusSpeed / Prescaler
+PRS[4:0] ATD Clock Prescaler (for divisor)
+example: 20 (divisor *or prescaler* is always even) from 2 - 64
+20 / 2 - 1 = 9 
+0d9 = 0b 1001 ATD0CTL4_PRS3_MASK | ATD0CTL4_PRS0_MASK;
+
+8 / 2 - 1 = 3
+0d3 = 0b 0011 ATD0CTL4_PRS1_MASK | ATD0CTL4_PRS0_MASK;
+
+ATDCTL0
+Wrap around an0 after conversion
+Wrap Channel        WRAP3   WRAP2   WRAP1   WRAP0
+Not exist           0       0       0       0
+1                   0       0       0       1
+2                   0       0       1       0                 
+3                   0       0       1       1   
+4                   0       1       0       0
+5                   0       1       0       1
+6                   0       1       1       0
+7                   0       1       1       1
+8                   1       0       0       0   
+9                   1       0       0       1
+10                  1       0       1       0
+11                  1       0       1       1
+12                  1       1       0       0
+13                  1       1       0       1
+14                  1       1       1       0   
+15                  1       1       1       1
+
+
+ATD0CTL5
+DJM : Result Register Data Justification ( 0 : Left and 1 : Right)
+SCAN : Continuous Conversion Sequence Mode ( 0 : single and 1 : continous)
+MULT : Multiple channel (0 : single and 1 : multiple)   
+Input Channel       CC      CB      CA
+0 :                 0       0       0
+1 :                 0       0       1   ATD0CTL5_CA_MASK
+2 :                 0       1       0   ATD0CTL5_CB_MASK 
+3 :                 0       1       1   ATD0CTL5_CB_MASK | ATD0CTL5_CA_MASK
+4 :                 1       0       0   ATD0CTL5_CC_MASK 
+5 :                 1       0       1   ATD0CTL5_CC_MASK | ATD0CTL5_CA_MASK
+6 :                 1       1       0   ATD0CTL5_CC_MASK | ATD0CTL5_CB_MASK     
+7 :                 1       1       1   ATD0CTL5_CC_MASK | ATD0CTL5_CB_MASK | ATD0CTL5_CA_MASK
+
+ */
+
+
